@@ -1,25 +1,14 @@
-import { Localidade } from './Localidade';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, Relation } from "typeorm";
+import { Localidade } from "./Localidade";
 
+@Entity()
 export class Indicador {
-    private valores: Map<Date, number>;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    constructor(
-        public localidade: Localidade,
-        public nome: string,
-        public eixo: number,
-    ) {
-        this.valores = new Map<Date, number>();
-    }
+  @Column()
+  nome!: string;
 
-    public getValor(mes: Date): number | undefined {
-        return this.valores.get(mes);
-    }
-
-    public getValores(): Map<Date, number> {
-        return this.valores;
-    }
-
-    public setValor(valor: Map<Date, number>): void {
-        this.valores = valor;
-    }
+  @ManyToMany("Localidade", "indicadores_localidades")
+  localidades: Relation<Localidade>;
 }

@@ -1,8 +1,20 @@
-import { Localidade } from './Localidade';
-import { Estado } from './Estado';
+import "reflect-metadata"
+import { Entity, PrimaryColumn, ManyToOne, Relation } from "typeorm";
+import { Localidade } from "./Localidade";
+import { Estado } from "./Estado";
 
+@Entity()
 export class Cidade extends Localidade {
-  constructor(public estado: Estado, id: number, codigo: string, nome: string) {
-    super(id, codigo, nome);
+
+  constructor(estado: Estado, codigo: number, nome: string) {
+    super(codigo, nome);
+    this.estado = estado;
   }
+
+  @ManyToOne('Estado', 'cidades') //quick fix - https://github.com/typeorm/typeorm/issues/4190
+  estado: Relation<Estado>;
+
+  @PrimaryColumn()
+  codigo!: number;
 }
+

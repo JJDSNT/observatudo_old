@@ -1,7 +1,7 @@
 import { Estado } from '../models/Estado';
 import { Cidade } from '../models/Cidade';
-import { EstadoRepository } from '../repositories/estadoRepository';
-import { CidadeRepository } from '../repositories/cidadeRepository';
+import { EstadoRepository } from '../repositories/EstadoRepository';
+import { CidadeRepository } from '../repositories/CidadeRepository';
 
 export class LocalidadeService {
   private estadoRepository: EstadoRepository;
@@ -28,10 +28,10 @@ export class LocalidadeService {
     return this.cidadeRepository.findByEstadoId(estadoId);
   }
 
-  public async buscarLocalidadePorIBGE(ibge: string): Promise<Estado | Cidade | null> {
+  public async buscarLocalidadePorIBGE(ibge: number): Promise<Estado | Cidade | null> {
     let localidade: Estado | Cidade | null = await this.estadoRepository.findByIBGE(ibge);
     if (!localidade) {
-      localidade = await this.cidadeRepository.findByIBGE(ibge);
+      localidade = await this.cidadeRepository.findByCodigo(ibge);
     }
     return localidade;
   }
