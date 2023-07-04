@@ -30,7 +30,7 @@ const DB =  new DataSource({
     type: "sqlite",
     database: "testtypeorm.sqlite",
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [Localidade,Estado,Cidade,Indicador,ValorIndicador],
     migrations: [],
     subscribers: [],
