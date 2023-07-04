@@ -1,4 +1,5 @@
 import { Entity, Column, ManyToOne, JoinColumn, PrimaryColumn } from "typeorm";
+import type { Relation } from "typeorm";
 import { Localidade } from "./Localidade";
 import { Indicador } from "./Indicador";
 
@@ -10,13 +11,14 @@ export class ValorIndicador {
   @PrimaryColumn()
   indicadorId!: number;
 
-  @ManyToOne(() => Localidade, localidade => localidade.valoresIndicador)
-  @JoinColumn({ name: "localidadeId" })
-  localidade!: Localidade;
 
-  @ManyToOne(() => Indicador, indicador => indicador.valoresIndicador)
-  @JoinColumn({ name: "indicadorId" })
-  indicador!: Indicador;
+  @ManyToOne('Localidade', 'valoresIndicador')
+  @JoinColumn({ name: 'localidadeId' })
+  localidade!: Relation<Localidade>;
+
+  @ManyToOne('Indicador', 'valoresIndicador')
+  @JoinColumn({ name: 'indicadorId' })
+  indicador!: Relation<Indicador>;
 
   @Column({ type: "date" })
   data!: Date;

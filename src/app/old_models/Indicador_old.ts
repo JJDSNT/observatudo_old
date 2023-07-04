@@ -1,4 +1,4 @@
-import { Localidade } from './Localidade';
+import { Localidade } from '../models/Localidade';
 
 export class Indicador {
     private valores: Map<Date, number>;

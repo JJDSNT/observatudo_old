@@ -1,5 +1,5 @@
-import { Indicador } from './Indicador';
-import { Localidade } from './Localidade';
+import { Indicador } from '../models/Indicador';
+import { Localidade } from '../models/Localidade';
 
 export class IndicadorLocalidade {
   private indicador: Indicador;

@@ -1,18 +1,18 @@
 import { Estado } from '../models/Estado';
-import { EstadoRepository } from '../repositories/estadoRepository';
+import { EstadoRepository } from '../repositories/EstadoRepository';
 
 export class EstadoService {
   private estadoRepository: EstadoRepository;
 
   constructor() {
-    this.estadoRepository = new EstadoRepository();
+    this.estadoRepository = new EstadoRepository(Estado);
   }
 
   public adicionarEstado(estado: Estado): void {
     //this.estadoRepository.adicionarEstado(estado);
   }
 
-  public async getEstados(): Promise<Estado[]> {
+  public async getEstados(): Promise<Estado|Estado[]|null> {
     return this.estadoRepository.getEstados();
   }
 

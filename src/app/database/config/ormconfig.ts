@@ -1,10 +1,10 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm";
-import { User } from "../entity/User"
 import { Localidade } from "../../models/Localidade";
 import { Indicador } from "../../models/Indicador";
 import { Estado } from "../../models/Estado";
 import { Cidade } from "../../models/Cidade";
+import { ValorIndicador } from "@/app/models/ValorIndicador";
 
 
 
@@ -31,7 +31,7 @@ const DB =  new DataSource({
     database: "testtypeorm.sqlite",
     synchronize: true,
     logging: true,
-    entities: [User,Estado,Cidade,Indicador,Localidade],
+    entities: [Localidade,Estado,Cidade,Indicador,ValorIndicador],
     migrations: [],
     subscribers: [],
     

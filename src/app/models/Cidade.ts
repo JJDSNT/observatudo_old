@@ -1,5 +1,6 @@
 import "reflect-metadata"
-import { Entity, PrimaryColumn, ManyToOne, Relation } from "typeorm";
+import { Entity, PrimaryColumn, ManyToOne } from "typeorm";
+import type { Relation } from "typeorm";
 import { Localidade } from "./Localidade";
 import { Estado } from "./Estado";
 

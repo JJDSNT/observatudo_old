@@ -1,5 +1,6 @@
 import "reflect-metadata"
-import { Entity, Column, ManyToMany, JoinTable, PrimaryColumn, Relation } from "typeorm";
+import { Entity, Column, ManyToMany, JoinTable, PrimaryColumn } from "typeorm";
+import type { Relation } from "typeorm";
 import { Indicador } from "./Indicador";
 
 @Entity()

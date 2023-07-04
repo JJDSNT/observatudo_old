@@ -1,13 +1,13 @@
-import { Cidade } from './Cidade';
-import { Localidade } from './Localidade';
+import { Cidade } from '../models/Cidade';
+import { Localidade } from '../models/Localidade';
 
 export class Estado extends Localidade {
 
   private cidades: Cidade[];
   private capital: Cidade;
 
-  constructor(public uf: string, id: number, codigo: string, nome: string, capital: Cidade) {
-    super(id, codigo, nome);
+  constructor(public uf: string, id: number, codigo: number, nome: string, capital: Cidade) {
+    super(codigo, nome);
     this.cidades = [];
     this.capital = this.cidades[0];
   }
