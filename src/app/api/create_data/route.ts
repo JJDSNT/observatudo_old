@@ -1,10 +1,17 @@
+import "reflect-metadata";
 import { NextResponse } from "next/server";
 import { CreateDataController } from "../../controllers/CreateDataController";
 
-const createDataController = new CreateDataController();
-
 export async function GET() {
-    let resposta = await createDataController.createData();
+    const controller = new CreateDataController();
 
-    return NextResponse.json({ message: resposta }, { status: 200 });
+    try {
+        const result = await controller.createData();
+        return NextResponse.json({ message: result }, { status: 200 });
+    } catch (error) {
+        console.error(error);
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+    }
+
 }
+

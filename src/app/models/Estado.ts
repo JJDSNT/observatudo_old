@@ -23,6 +23,10 @@ export class Estado extends Localidade {
   capital!: Relation<Cidade>;
 
 
+  @OneToOne('Localidade','estado')
+  //@JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
+  localidade!: Relation<Localidade>;
+
 
   constructor(codigo: number, nome: string, sigla: string) {
     super(codigo, nome);

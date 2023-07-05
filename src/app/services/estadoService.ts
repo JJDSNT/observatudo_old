@@ -1,11 +1,12 @@
+import DB from "../database/config/ormconfig";
 import { Estado } from '../models/Estado';
 import { EstadoRepository } from '../repositories/EstadoRepository';
 
 export class EstadoService {
-  private estadoRepository: EstadoRepository;
+  //private estadoRepository: EstadoRepository;
 
   constructor() {
-    this.estadoRepository = new EstadoRepository(Estado);
+    //this.estadoRepository = new EstadoRepository(Estado);
   }
 
   public adicionarEstado(estado: Estado): void {
@@ -13,7 +14,9 @@ export class EstadoService {
   }
 
   public async getEstados(): Promise<Estado|Estado[]|null> {
-    return this.estadoRepository.getEstados();
+    //return this.estadoRepository.getEstados();
+    let estados = await DB.getRepository(Estado).find();
+    return estados;
   }
 
   public async buscarEstadoPorUF(uf: string): Promise<Estado | undefined> {

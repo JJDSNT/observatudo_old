@@ -9,9 +9,14 @@ export class Indicador {
     nome: string,
     descricao: string,
     eixo: number,
-  ) { }
+  ){
+    this.nome = nome;
+    this.descricao = descricao;
+    this.eixo = eixo;
+  }
   @PrimaryGeneratedColumn()
-  id!: number; // depois consertar isso, tem que ser uma chave composta id do source com o id do indicador
+  id!: number; // depois consertar isso, tem que ser uma chave composta id do source com o id do indicador 
+  //provavelmente eu uma classe indicadorID
 
   @Column()
   nome!: string;
@@ -25,8 +30,9 @@ export class Indicador {
   @ManyToMany("Localidade", "indicadores_localidades")
   localidades!: Relation<Localidade>;
 
-  @OneToMany(() => ValorIndicador, valorIndicador => valorIndicador.indicador)
+  @OneToMany("ValorIndicador", "indicador")
   valoresIndicador!: ValorIndicador[];
+
 /*
   @Column("jsonb")
   valores!: Map<Date, number>;

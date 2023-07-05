@@ -49,11 +49,11 @@ export class LocalidadeService {
     return localidade;
   }
 
-  async listarEstados(): Promise<Estado[]> {
+  async getEstados(): Promise<Estado[]> {
     return this.estadoRepository.find();
   }
 
-  async listarCidades(): Promise<Cidade[]> {
+  async getCidades(): Promise<Cidade[]> {
     return this.cidadeRepository.find();
   }
 }

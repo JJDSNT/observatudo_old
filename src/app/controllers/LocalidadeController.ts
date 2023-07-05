@@ -1,8 +1,8 @@
 import { Estado } from '../models/Estado';
 import { Cidade } from '../models/Cidade';
 import { LocalidadeService } from '../services/localidadeService';
-import { EstadoRepository } from '../repositories/estadoRepository';
-import { CidadeRepository } from '../repositories/cidadeRepository';
+import { EstadoRepository } from '../repositories/EstadoRepository';
+import { CidadeRepository } from '../repositories/CidadeRepository';
 
 class LocalidadeController {
   private localidadeService: LocalidadeService;

@@ -37,7 +37,7 @@ const DB = new DataSource({
 
     //    entities: ["./src/Entities/**/*.ts"],
 })
-
+/*
 DB
     .initialize()
     .then(() => {
@@ -46,5 +46,5 @@ DB
     .catch((err) => {
         console.error(`Data Source initialization error`, err);
     })
-
+*/
 export default DB;

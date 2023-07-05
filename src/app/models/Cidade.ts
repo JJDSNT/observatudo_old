@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { Entity, PrimaryColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryColumn, ManyToOne, OneToOne } from "typeorm";
 import type { Relation } from "typeorm";
 import { Localidade } from "./Localidade";
 import { Estado } from "./Estado";
@@ -17,5 +17,10 @@ export class Cidade extends Localidade {
 
   @PrimaryColumn()
   codigo!: number;
+/*
+  @OneToOne(() => Localidade, localidade => localidade.cidade)
+  localidade!: Relation<Localidade>;
+*/
+
 }
 

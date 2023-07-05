@@ -1,0 +1,5 @@
+Fix: async conection access
+Fix: creation of localidades for each estado and cidade
+Fix: create enum entities: source and eixos
+Fix: create id class for inidicador id+source
+Fix: circular dependecy warning
