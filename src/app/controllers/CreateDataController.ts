@@ -5,6 +5,7 @@ import { Cidade } from "../models/Cidade";
 import { Indicador } from "../models/Indicador";
 import { ValorIndicador } from "../models/ValorIndicador";
 import { Localidade } from "../models/Localidade";
+import { Eixo, Eixos } from "../models/Eixos";
 
 
 export class CreateDataController {
@@ -75,12 +76,36 @@ export class CreateDataController {
       await DB.manager.save(estado2);
       await DB.manager.save(estado3);
 
+      // Criar eixos
+      const eixos = [
+        { nome: Eixos.Saude, icon: 'FaHeartbeat', cor: 'bg-light-coral' },
+        { nome: Eixos.Educacao, icon: 'FaUserGraduate', cor: 'bg-light-sky-blue' },
+        { nome: Eixos.AssistenciaSocial, icon: 'FaHome', cor: 'bg-medium-slate-blue' },
+        { nome: Eixos.Seguranca, icon: 'FaShieldAlt', cor: 'bg-orange' },
+        { nome: Eixos.MeioAmbiente, icon: 'FaGlobeAmericas', cor: 'bg-yellow-green' },
+        { nome: Eixos.EconomiaFinancas, icon: 'FaMoneyBillWave', cor: 'bg-dark-khaki' },
+        { nome: Eixos.Personalizado, icon: 'FaQuestion', cor: 'bg-dim-grey' }
+      ];
+      
+      const eixosCriados = [];
+
+      for (const eixoData of eixos) {
+        const eixo = new Eixo();
+        eixo.nome = eixoData.nome;
+        eixo.icon = eixoData.icon;
+        eixo.cor = eixoData.cor;
+      
+        await DB.manager.save(eixo);
+        eixosCriados.push(eixo);
+      }
+      
+
       // Criar indicadores
 
-      const indicador1 = new Indicador("Cobertura vacinal", "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde.", 1);
-      const indicador2 = new Indicador("Índice de pobreza", "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade.", 1);
-      const indicador3 = new Indicador("Taxa de conclusão do ensino médio", "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino", 2);
-      const indicador4 = new Indicador("Capacidade de pagamento", "Esse indicador mede a capacidade de pagamento", 2);
+      const indicador1 = new Indicador("Cobertura vacinal", "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde.", [eixosCriados[0]]);
+      const indicador2 = new Indicador("Índice de pobreza", "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade.", [eixosCriados[2]]);
+      const indicador3 = new Indicador("Taxa de conclusão do ensino médio", "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino", [eixosCriados[1]]);
+      const indicador4 = new Indicador("Capacidade de pagamento", "Esse indicador mede a capacidade de pagamento", [eixosCriados[5]]);
 
       // Salvar indicadores no banco de dados
       await DB.manager.save(indicador1);

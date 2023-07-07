@@ -1,7 +1,5 @@
-//import { openDatabase } from '../database/database';
-import { Repository } from 'typeorm';
+import DB from "../database/config/ormconfig";
+//consertar para correta inicialização do banco
 import { Cidade } from '../models/Cidade';
 
-export class CidadeRepository extends Repository<Cidade> {
-  // Adicione aqui os métodos personalizados para trabalhar com o banco de dados para a entidade Estado
-}
+export const CidadeRepository = DB.getRepository(Cidade);
