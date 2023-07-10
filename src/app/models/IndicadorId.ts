@@ -17,13 +17,14 @@ export class IndicadorId {
         source_indicador: SourceIndicador,
         nome: string,
         descricao: string,
-        dono: string,
-        email: string
+        dono?: string,
+        email?: string
     ) {
         this.codigo_indicador = codigo_indicador;
         this.source_indicador = source_indicador;
         this.nome = nome;
         this.descricao = descricao;
+        this.dono = dono;
         this.email = email;
     }
 

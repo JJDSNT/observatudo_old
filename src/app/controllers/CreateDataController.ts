@@ -3,6 +3,7 @@ import DB from '../database/config/ormconfig_seminit'
 import { Estado } from "../models/Estado";
 import { Cidade } from "../models/Cidade";
 import { Indicador } from "../models/Indicador";
+import { IndicadorId } from "../models/IndicadorId";
 import { ValorIndicador } from "../models/ValorIndicador";
 import { Localidade } from "../models/Localidade";
 import { Eixo, Eixos } from "../models/Eixo";
@@ -101,11 +102,44 @@ export class CreateDataController {
 
 
       // Criar indicadores
+      enum SourceIndicador {
+        Fonte1 = "Fonte 1",
+        Fonte2 = "Fonte 2",
+        Fonte3 = "Fonte 3"
+    }
 
-      const indicador1 = new Indicador("Cobertura vacinal", "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde.", [eixosCriados[0]]);
-      const indicador2 = new Indicador("Índice de pobreza", "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade.", [eixosCriados[2]]);
-      const indicador3 = new Indicador("Taxa de conclusão do ensino médio", "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino", [eixosCriados[1]]);
-      const indicador4 = new Indicador("Capacidade de pagamento", "Esse indicador mede a capacidade de pagamento", [eixosCriados[5]]);
+      const indicadorId1 = new IndicadorId(
+        "indicador1",
+        SourceIndicador.Fonte1,
+        "Cobertura vacinal",
+        "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde."
+      );
+      const indicador1 = new Indicador(indicadorId1, [eixosCriados[0]]);
+      
+      const indicadorId2 = new IndicadorId(
+        "indicador2",
+        SourceIndicador.Fonte2,
+        "Índice de pobreza",
+        "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade."
+      );
+      const indicador2 = new Indicador(indicadorId2, [eixosCriados[2]]);
+      
+      const indicadorId3 = new IndicadorId(
+        "indicador3",
+        SourceIndicador.Fonte3,
+        "Taxa de conclusão do ensino médio",
+        "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino"
+      );
+      const indicador3 = new Indicador(indicadorId3, [eixosCriados[1]]);
+      
+      const indicadorId4 = new IndicadorId(
+        "indicador4",
+        SourceIndicador.Fonte1,
+        "Capacidade de pagamento",
+        "Esse indicador mede a capacidade de pagamento"
+      );
+      const indicador4 = new Indicador(indicadorId4, [eixosCriados[5]]);
+      
 
       // Salvar indicadores no banco de dados
       await DB.manager.save(indicador1);

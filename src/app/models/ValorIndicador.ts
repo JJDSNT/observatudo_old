@@ -5,11 +5,11 @@ import { Indicador } from "./Indicador";
 
 @Entity()
 export class ValorIndicador {
-  @PrimaryColumn()
-  codigo!: number;
 
   @PrimaryColumn()
-  indicadorId!: number;
+  @ManyToOne('Indicador', 'valoresIndicador')
+  @JoinColumn({ name: 'indicadorId' })
+  indicador!: Relation<Indicador>;
 
   @PrimaryColumn({ type: "date" })
   data!: Date;
@@ -17,11 +17,6 @@ export class ValorIndicador {
   @ManyToOne('Localidade', 'valoresIndicador')
   @JoinColumn({ name: 'codigo' })
   localidade!: Relation<Localidade>;
-
-  @ManyToOne('Indicador', 'valoresIndicador')
-  @JoinColumn({ name: 'indicadorId' })
-  indicador!: Relation<Indicador>;
-
 
 
   @Column({ type: "float" })
