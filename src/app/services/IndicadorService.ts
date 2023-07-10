@@ -1,16 +1,23 @@
 import { Service } from 'typedi';
 import { In, Repository } from 'typeorm';
-import DB from '../database/config/ormconfig';
+
 
 import { Indicador } from "../models/Indicador";
+import { indicadorRepository } from "../repositories/IndicadorRepository"
 
 class IndicadorService {
-  private indicadorRepository = getRepository(Indicador);
+  //private indicadorRepository = getRepository(Indicador);
 
   async buscarTodosIndicadores(): Promise<Indicador[]> {
-    return await this.indicadorRepository.find();
+    return await indicadorRepository.find(
+      {
+        //relations: ['Eixo'],
+        //loadRelationIds: true,
+      }
+    );
   }
-  
+
+
   async buscarIndicadoresPorEixo(eixoId: number): Promise<Indicador[]> {
     return await this.indicadorRepository.createQueryBuilder("indicador")
       .leftJoin("indicador.eixos", "eixo")
@@ -42,9 +49,7 @@ async buscarIndicadoresComValoresPorEixo(localidadeId: number): Promise<any[]> {
     return await this.indicadorRepository.findOne(id);
   }
 
-  async buscarTodosIndicadores(): Promise<Indicador[]> {
-    return await this.indicadorRepository.find();
-  }
+
 
   async atualizarIndicador(id: number, nome?: string, descricao?: string, eixos?: number[]): Promise<Indicador | undefined> {
     const indicador = await this.indicadorRepository.findOne(id);

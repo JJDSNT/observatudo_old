@@ -56,7 +56,7 @@ export class LocalidadeService {
       return null;
     } catch (error) {
       console.error('Erro ao buscar os estados e cidades:', error);
-      return null;
+      return error;
     }
   }
 

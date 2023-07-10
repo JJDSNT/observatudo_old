@@ -5,7 +5,7 @@ import { Cidade } from "../models/Cidade";
 import { Indicador } from "../models/Indicador";
 import { ValorIndicador } from "../models/ValorIndicador";
 import { Localidade } from "../models/Localidade";
-import { Eixo, Eixos } from "../models/Eixos";
+import { Eixo, Eixos } from "../models/Eixo";
 
 
 export class CreateDataController {
@@ -86,7 +86,7 @@ export class CreateDataController {
         { nome: Eixos.EconomiaFinancas, icon: 'FaMoneyBillWave', cor: 'bg-dark-khaki' },
         { nome: Eixos.Personalizado, icon: 'FaQuestion', cor: 'bg-dim-grey' }
       ];
-      
+
       const eixosCriados = [];
 
       for (const eixoData of eixos) {
@@ -94,11 +94,11 @@ export class CreateDataController {
         eixo.nome = eixoData.nome;
         eixo.icon = eixoData.icon;
         eixo.cor = eixoData.cor;
-      
+
         await DB.manager.save(eixo);
         eixosCriados.push(eixo);
       }
-      
+
 
       // Criar indicadores
 
@@ -137,7 +137,7 @@ export class CreateDataController {
 
       // Salvar valores de indicador no banco de dados
       await DB.manager.save(valoresIndicador);
-
+      console.log('dados criados');
       return "Dados criados com sucesso!";
 
 
@@ -150,8 +150,8 @@ export class CreateDataController {
         return err;
       })
     //.catch(error => console.log(error))
-
-
+    console.log('TESTANDO');
+    return 'testando';
 
   }
 }

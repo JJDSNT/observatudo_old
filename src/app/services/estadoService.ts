@@ -15,7 +15,7 @@ export class EstadoService {
 
   public async getEstados(): Promise<Estado|Estado[]|null> {
     //return this.estadoRepository.getEstados();
-    let estados = await DB.getRepository(Estado).find();
+    let estados = await EstadoRepository.find();
     return estados;
   }
 

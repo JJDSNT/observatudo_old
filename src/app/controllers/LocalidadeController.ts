@@ -2,7 +2,7 @@ import { Service } from 'typedi';
 import { Estado } from '../models/Estado';
 import { Cidade } from '../models/Cidade';
 import { LocalidadeService } from '../services/LocalidadeService';
-import { EstadoRepository } from '../repositories/EstadoRepository';
+import { estadoRepository } from '../repositories/EstadoRepository';
 import { CidadeRepository } from '../repositories/CidadeRepository';
 
 

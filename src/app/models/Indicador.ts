@@ -1,31 +1,24 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, JoinTable } from "typeorm";
 import type { Relation } from "typeorm";
 import { Localidade } from "./Localidade";
-import { Eixo } from "./Eixos"
+import { Eixo } from "./Eixo"
+import { IndicadorId } from "./IndicadorId";
 import { ValorIndicador } from "./ValorIndicador"
 
 @Entity()
 export class Indicador {
   constructor(
-    nome: string,
-    descricao: string,
+    indicadorId: IndicadorId,
     eixos: Eixo[],
   ){
-    this.nome = nome;
-    this.descricao = descricao;
+    this.indicadorId = indicadorId;
     this.eixos = eixos;
   }
-  @PrimaryGeneratedColumn()
-  id!: number; // depois consertar isso, tem que ser uma chave composta id do source com o id do indicador 
-  //provavelmente eu uma classe indicadorID
 
-  @Column()
-  nome!: string;
+  @Column(() => IndicadorId)
+  indicadorId!: IndicadorId;
 
-  @Column()
-  descricao!: string;
-
-  @ManyToMany(() => Eixo)
+  @ManyToMany('Eixo')
   @JoinTable()
   eixos!: Eixo[];
 
@@ -57,5 +50,8 @@ export class Indicador {
     return valorIndicador?.valor;
   }
 
+  getIndicadorId(): IndicadorId {
+    return this.indicadorId;
+  }
 
 }

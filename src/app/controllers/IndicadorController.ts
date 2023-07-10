@@ -1,19 +1,32 @@
-import { Request, Response } from "express";
+import { Indicador } from "../models/Indicador";
 import IndicadorService from "../services/IndicadorService";
 
 class IndicadorController {
   private indicadorService = new IndicadorService();
 
-  async listarIndicadores(req: Request, res: Response) {
+  async buscarTodosIndicadores(req: Request) {
     try {
       const indicadores = await this.indicadorService.buscarTodosIndicadores();
-      return res.json(indicadores);
+      return indicadores;
     } catch (error) {
       console.error("Erro ao buscar os indicadores:", error);
-      return res.status(500).json({ message: "Erro ao buscar os indicadores" });
+      return error;
     }
   }
-  
+
+
+
+  async listarIndicadores(request, response) {
+    try {
+      const indicadores = await this.indicadorService.buscarTodosIndicadores();
+      return request.json(indicadores);
+    } catch (error) {
+      console.error("Erro ao buscar os indicadores:", error);
+      return response.status(500).json({ message: "Erro ao buscar os indicadores" });
+    }
+  }
+
+
   async listarIndicadoresPorEixo(req: Request, res: Response) {
     try {
       const { eixoId } = req.params;
@@ -79,15 +92,7 @@ class IndicadorController {
     }
   }
 
-  async buscarTodosIndicadores(req: Request, res: Response) {
-    try {
-      const indicadores = await this.indicadorService.buscarTodosIndicadores();
-      return res.json(indicadores);
-    } catch (error) {
-      console.error("Erro ao buscar os indicadores:", error);
-      return res.status(500).json({ message: "Erro ao buscar os indicadores" });
-    }
-  }
+
 
   async atualizarIndicador(req: Request, res: Response) {
     try {
