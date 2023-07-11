@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, JoinTable } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, OneToMany, JoinTable, PrimaryColumn, JoinColumn, OneToOne } from "typeorm";
 import type { Relation } from "typeorm";
 import { Localidade } from "./Localidade";
 import { Eixo } from "./Eixo"
@@ -7,19 +7,16 @@ import { ValorIndicador } from "./ValorIndicador"
 
 @Entity()
 export class Indicador {
-  constructor(
-    indicadorId: IndicadorId,
-    eixos: Eixo[],
-  ){
-    this.indicadorId = indicadorId;
-    this.eixos = eixos;
-  }
 
-  @Column(() => IndicadorId)
-  indicadorId!: IndicadorId;
+  @PrimaryColumn()
+  codigo_indicador!: string;
 
-  @ManyToMany('Eixo')
-  @JoinTable()
+  @OneToOne('IndicadorId')
+  @JoinColumn({ name: 'codigo_indicador', referencedColumnName: 'codigo_indicador' })
+  indicadorId!: Relation<IndicadorId>;
+
+  @ManyToMany(() => Eixo, eixo => eixo.indicadores)
+  @JoinTable({ name: "indicador_eixo" })
   eixos!: Eixo[];
 
   @ManyToMany("Localidade", "indicadores_localidades")
@@ -28,18 +25,26 @@ export class Indicador {
   @OneToMany("ValorIndicador", "indicador")
   valoresIndicador!: ValorIndicador[];
 
-/*
-  @Column("jsonb")
-  valores!: Map<Date, number>;
-
-  getValores2(): Map<Date, number> {
-    return this.valores;
+  constructor(
+    indicadorId: IndicadorId,
+    eixos: Eixo[],
+  ) {
+    this.indicadorId = indicadorId;
+    this.eixos = eixos;
   }
 
-  getValor2(date: Date): number | undefined {
-    return this.valores.get(date);
-  }
-*/
+  /*
+    @Column("jsonb")
+    valores!: Map<Date, number>;
+  
+    getValores2(): Map<Date, number> {
+      return this.valores;
+    }
+  
+    getValor2(date: Date): number | undefined {
+      return this.valores.get(date);
+    }
+  */
 
   getValores(): ValorIndicador[] {
     return this.valoresIndicador;

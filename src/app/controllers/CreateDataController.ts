@@ -142,9 +142,13 @@ export class CreateDataController {
       
 
       // Salvar indicadores no banco de dados
+      await DB.manager.save(indicadorId1);
       await DB.manager.save(indicador1);
+      await DB.manager.save(indicadorId2);
       await DB.manager.save(indicador2);
+      await DB.manager.save(indicadorId3);
       await DB.manager.save(indicador3);
+      await DB.manager.save(indicadorId4);
       await DB.manager.save(indicador4);
 
       //const valorRepository = DB.manager.getRepository(ValorIndicador);

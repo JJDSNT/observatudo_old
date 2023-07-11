@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Indicador } from "./Indicador";
 
 export enum Eixos {
@@ -26,8 +26,9 @@ export class Eixo {
   cor!: string;
 
   @ManyToMany(() => Indicador, indicador => indicador.eixos)
+  @JoinTable({ name: "indicador_eixo" })
   indicadores!: Indicador[];
-
+  
   getIndicadores(): Indicador[] {
     return this.indicadores;
   }

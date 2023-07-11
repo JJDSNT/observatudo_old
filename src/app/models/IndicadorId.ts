@@ -1,9 +1,12 @@
+import { Column, Entity, PrimaryColumn } from "typeorm";
+
 enum SourceIndicador {
     Fonte1 = "Fonte 1",
     Fonte2 = "Fonte 2",
     Fonte3 = "Fonte 3"
 }
 
+@Entity()
 export class IndicadorId {
     private codigo_indicador: string;
     private source_indicador: SourceIndicador;
@@ -11,6 +14,27 @@ export class IndicadorId {
     private descricao: string;
     private dono: string;
     private email: string;
+
+
+    @PrimaryColumn()
+    codigo_indicador: string;
+
+    @PrimaryColumn()
+    @Column({ type: "enum", enum: SourceIndicador })
+    source_indicador: SourceIndicador;
+
+    @Column()
+    nome: string;
+
+    @Column()
+    descricao: string;
+
+
+    @Column({ nullable: true, type: 'text' })
+    dono: string | null;
+
+    @Column({ nullable: true, type: 'text' })
+    email: string | null;
 
     constructor(
         codigo_indicador: string,

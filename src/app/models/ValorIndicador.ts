@@ -5,8 +5,6 @@ import { Indicador } from "./Indicador";
 
 @Entity()
 export class ValorIndicador {
-
-  @PrimaryColumn()
   @ManyToOne('Indicador', 'valoresIndicador')
   @JoinColumn({ name: 'indicadorId' })
   indicador!: Relation<Indicador>;
