@@ -1,12 +1,13 @@
 import "reflect-metadata"
 import DB from '../database/config/ormconfig_seminit'
+import { Localidade } from "../models/Localidade";
+import { Pais } from "@/app/models/Pais";
 import { Estado } from "../models/Estado";
 import { Cidade } from "../models/Cidade";
 import { Indicador } from "../models/Indicador";
-import { IndicadorId } from "../models/IndicadorId";
-import { ValorIndicador } from "../models/ValorIndicador";
-import { Localidade } from "../models/Localidade";
+import { Fonte } from "@/app/models/Fonte"
 import { Eixo, Eixos } from "../models/Eixo";
+import { ValorIndicador } from "../models/ValorIndicador";
 
 
 export class CreateDataController {
@@ -79,14 +80,15 @@ export class CreateDataController {
 
       // Criar eixos
       const eixos = [
-        { nome: Eixos.Saude, icon: 'FaHeartbeat', cor: 'bg-light-coral' },
-        { nome: Eixos.Educacao, icon: 'FaUserGraduate', cor: 'bg-light-sky-blue' },
-        { nome: Eixos.AssistenciaSocial, icon: 'FaHome', cor: 'bg-medium-slate-blue' },
-        { nome: Eixos.Seguranca, icon: 'FaShieldAlt', cor: 'bg-orange' },
-        { nome: Eixos.MeioAmbiente, icon: 'FaGlobeAmericas', cor: 'bg-yellow-green' },
-        { nome: Eixos.EconomiaFinancas, icon: 'FaMoneyBillWave', cor: 'bg-dark-khaki' },
-        { nome: Eixos.Personalizado, icon: 'FaQuestion', cor: 'bg-dim-grey' }
+        { nome: Eixos.Saude, icon: 'FaHeartbeat', cor: 'bg-red-500' },
+        { nome: Eixos.Educacao, icon: 'FaUserGraduate', cor: 'bg-blue-500' },
+        { nome: Eixos.AssistenciaSocial, icon: 'FaHome', cor: 'bg-purple-500' },
+        { nome: Eixos.Seguranca, icon: 'FaShieldAlt', cor: 'bg-yellow-500' },
+        { nome: Eixos.MeioAmbiente, icon: 'FaGlobeAmericas', cor: 'bg-green-500' },
+        { nome: Eixos.EconomiaFinancas, icon: 'FaMoneyBillWave', cor: 'bg-indigo-500' },
+        { nome: Eixos.Personalizado, icon: 'FaQuestion', cor: 'bg-gray-500' }
       ];
+
 
       const eixosCriados = [];
 
@@ -101,55 +103,53 @@ export class CreateDataController {
       }
 
 
-      // Criar indicadores
-      enum SourceIndicador {
-        Fonte1 = "Fonte 1",
-        Fonte2 = "Fonte 2",
-        Fonte3 = "Fonte 3"
-    }
+      // Criar fontes
+      const fonte1 = new Fonte();
+      fonte1.nome = "Fonte 1";
+      fonte1.url = "https://www.fonte1.com";
 
-      const indicadorId1 = new IndicadorId(
+      const fonte2 = new Fonte();
+      fonte2.nome = "Fonte 2";
+      fonte2.url = "https://www.fonte2.com";
+
+      // Salvar fontes no banco de dados
+      await DB.manager.save(fonte1);
+      await DB.manager.save(fonte2);
+
+      // Criar indicadores
+
+      const indicador1 = new Indicador(
         "indicador1",
-        SourceIndicador.Fonte1,
         "Cobertura vacinal",
-        "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde."
+        "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde.",
+        fonte1,[eixosCriados[0]]
       );
-      const indicador1 = new Indicador(indicadorId1, [eixosCriados[0]]);
-      
-      const indicadorId2 = new IndicadorId(
+
+
+      const indicador2 = new Indicador(
         "indicador2",
-        SourceIndicador.Fonte2,
         "Índice de pobreza",
-        "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade."
+        "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade.",
+        fonte1,[eixosCriados[2]]
       );
-      const indicador2 = new Indicador(indicadorId2, [eixosCriados[2]]);
-      
-      const indicadorId3 = new IndicadorId(
+
+      const indicador3 = new Indicador(
         "indicador3",
-        SourceIndicador.Fonte3,
         "Taxa de conclusão do ensino médio",
-        "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino"
+        "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino",
+        fonte2,[eixosCriados[1]]
       );
-      const indicador3 = new Indicador(indicadorId3, [eixosCriados[1]]);
-      
-      const indicadorId4 = new IndicadorId(
+
+      const indicador4 = new Indicador(
         "indicador4",
-        SourceIndicador.Fonte1,
         "Capacidade de pagamento",
-        "Esse indicador mede a capacidade de pagamento"
+        "Esse indicador mede a capacidade de pagamento",
+        fonte1,[eixosCriados[5]]
       );
-      const indicador4 = new Indicador(indicadorId4, [eixosCriados[5]]);
-      
+
 
       // Salvar indicadores no banco de dados
-      await DB.manager.save(indicadorId1);
-      await DB.manager.save(indicador1);
-      await DB.manager.save(indicadorId2);
-      await DB.manager.save(indicador2);
-      await DB.manager.save(indicadorId3);
-      await DB.manager.save(indicador3);
-      await DB.manager.save(indicadorId4);
-      await DB.manager.save(indicador4);
+      await DB.manager.save([indicador1, indicador2, indicador3, indicador4]);
 
       //const valorRepository = DB.manager.getRepository(ValorIndicador);
       // Criar valores de indicador para as localidades
@@ -163,7 +163,7 @@ export class CreateDataController {
           const valor = new ValorIndicador();
           valor.indicador = i === 1 ? indicador1 : i === 2 ? indicador2 : i === 3 ? indicador3 : indicador4;
           valor.localidade = localidade;
-          valor.valor = Math.random() * 100; // Valor aleatório entre 0 e 100
+          valor.valor = +(Math.random() * 100).toFixed(2); // Valor aleatório entre 0 e 100
           valor.data = new Date(currentDate); // Assign a new instance of Date
           currentDate.setMonth(currentDate.getMonth() + i); // Increment the month by 1
           valoresIndicador.push(valor);

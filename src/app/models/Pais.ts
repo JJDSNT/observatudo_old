@@ -2,9 +2,10 @@ import { Entity, PrimaryColumn, Column, OneToMany, OneToOne, JoinColumn } from "
 import type { Relation } from "typeorm";
 import { Localidade } from "./Localidade";
 import { Cidade } from "./Cidade";
+import { Estado } from "./Estado";
 
 @Entity()
-export class Estado extends Localidade {
+export class Pais extends Localidade {
   @PrimaryColumn()
   codigo!: number;
 
@@ -14,17 +15,19 @@ export class Estado extends Localidade {
   @Column()
   sigla!: string;
 
-  @OneToMany('Cidade', 'estado') // quick fix - https://github.com/typeorm/typeorm/issues/4190
-  cidades!: Cidade[];
+  @OneToMany('Estado', 'pais') // quick fix - https://github.com/typeorm/typeorm/issues/4190
+  Estados!: Estado[];
+
+  @OneToMany('Localidade','pais')
+  //@JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
+  localidade!: Relation<Localidade>;
+
 
   @OneToOne('Cidade')
   @JoinColumn()
   capital!: Relation<Cidade>;
 
 
-  @OneToOne('Localidade','estado')
-  //@JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
-  localidade!: Relation<Localidade>;
 
 
   constructor(codigo: number, nome: string, sigla: string) {
@@ -32,16 +35,10 @@ export class Estado extends Localidade {
     this.sigla = sigla;
   }
 
-  adicionarCidade(cidade: Cidade): void {
-    this.cidades.push(cidade);
-  }
 
-  adicionarCapital(cidade: Cidade): void {
-    this.capital = cidade;
-  }
 
-  getCidades(): Cidade[] {
-    return this.cidades;
+  getEstados(): Estados[] {
+    return this.Estados;
   }
 
   getCapital(): Cidade {

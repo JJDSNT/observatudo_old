@@ -1,11 +1,14 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm";
+
 import { Localidade } from "../../models/Localidade";
-import { Indicador } from "../../models/Indicador";
+import { Pais } from "../../models/Pais";
 import { Estado } from "../../models/Estado";
 import { Cidade } from "../../models/Cidade";
-import { ValorIndicador } from "@/app/models/ValorIndicador";
+import { Indicador } from "../../models/Indicador";
+import { Fonte } from "../../models/Fonte"
 import { Eixo } from "@/app/models/Eixo";
+import { ValorIndicador } from "@/app/models/ValorIndicador";
 
 
 
@@ -52,7 +55,7 @@ const DB =  new DataSource({
     database: "observatudo",
     logging: true,
     synchronize: true,
-    entities: [Localidade, Estado, Cidade, Indicador, ValorIndicador,Eixo],
+    entities: [Cidade, Eixo, Estado, Fonte, Indicador, Localidade, Pais, ValorIndicador],
     /*extra: {
         ssl: {
             rejectUnauthorized: false

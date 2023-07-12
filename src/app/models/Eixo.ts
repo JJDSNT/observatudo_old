@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany, JoinTable, Unique } from 'typeorm';
 import { Indicador } from "./Indicador";
 
 export enum Eixos {
@@ -6,12 +6,13 @@ export enum Eixos {
   Educacao = 'Educação',
   AssistenciaSocial = 'Assistência social',
   Seguranca = 'Segurança',
-  MeioAmbiente = 'Meio ambiente',
+  MeioAmbiente = 'Meio ambiente, urbanização e mobilidade',
   EconomiaFinancas = 'Economia & Finanças',
   Personalizado = 'Personalizado',
 }
 
 @Entity()
+@Unique(['nome'])
 export class Eixo {
   @PrimaryGeneratedColumn()
   id!: number;

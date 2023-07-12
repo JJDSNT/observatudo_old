@@ -1,14 +1,14 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm";
+
 import { Localidade } from "../../models/Localidade";
-import { Indicador } from "../../models/Indicador";
+import { Pais } from "../../models/Pais";
 import { Estado } from "../../models/Estado";
 import { Cidade } from "../../models/Cidade";
-import { ValorIndicador } from "@/app/models/ValorIndicador";
+import { Indicador } from "../../models/Indicador";
+import { Fonte } from "../../models/Fonte"
 import { Eixo } from "@/app/models/Eixo";
-import { IndicadorId } from "@/app/models/IndicadorId";
-
-
+import { ValorIndicador } from "@/app/models/ValorIndicador";
 
 
 // Using environment variables
@@ -44,7 +44,7 @@ import { IndicadorId } from "@/app/models/IndicadorId";
 //console.log(db_path);
 //HOST não é url
 //docker run --rm --name test-instance -e POSTGRES_PASSWORD=password -p 5433:5432 postgres
-const DB =  new DataSource({
+const DB = new DataSource({
     type: "postgres",
     host: 'localhost',
     port: 5433,
@@ -53,7 +53,7 @@ const DB =  new DataSource({
     database: "observatudo",
     logging: true,
     synchronize: true,
-    entities: [Cidade, Eixo, Estado, Indicador, IndicadorId,Localidade, ValorIndicador],
+    entities: [Cidade, Eixo, Estado, Fonte, Indicador, Localidade, Pais, ValorIndicador],
     /*(extra: {
         ssl: {
             rejectUnauthorized: false

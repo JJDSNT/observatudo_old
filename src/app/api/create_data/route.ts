@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { NextResponse } from "next/server";
 import { CreateDataController } from "../../controllers/CreateDataController";
 

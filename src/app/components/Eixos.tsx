@@ -1,15 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import axios from 'axios';
 import { IconContext } from 'react-icons';
 import { FaBicycle, FaGlobeAmericas, FaHeartbeat, FaHome, FaMoneyBillWave, FaQuestion, FaUserGraduate, FaShieldAlt } from 'react-icons/fa';
 
-const Eixos = () => {
-  const [eixos, setEixos] = useState([]);
+interface Eixo {
+  id: number;
+  nome: string;
+  icon: string;
+  cor: string;
+}
+
+interface EixosProps {
+  onEixoSelecionado: (numeroEixo: number) => void;
+}
+
+const Eixos: React.FC<EixosProps>= ({ onEixoSelecionado }) => {
+  const [eixos, setEixos] = useState<Eixo[]>([]);
+
+  const [eixoSelecionado, setEixoSelecionado] = useState<number | null>(null);
+
+  const handleEixoSelecionado = (numeroEixo: number) => {
+    setEixoSelecionado(numeroEixo);
+    onEixoSelecionado(numeroEixo);
+  };
 
   useEffect(() => {
     const fetchEixos = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/eixos'); // Substitua pela URL correta
+        const response = await axios.get('http://localhost:3000/api/eixos');
         setEixos(response.data.eixos);
       } catch (error) {
         console.error('Erro ao buscar os eixos:', error);
@@ -19,7 +37,7 @@ const Eixos = () => {
     fetchEixos();
   }, []);
 
-  const renderIcon = (icon) => {
+  const renderIcon = (icon: string): React.ReactElement | null => {
     switch (icon) {
       case 'FaHeartbeat':
         return <FaHeartbeat />;
@@ -46,12 +64,9 @@ const Eixos = () => {
         <button
           key={index}
           type="button"
-          className={`bg-orange-200 text-black border rounded-lg p-4 flex flex-col items-center justify-center space-y-2`}
+          className={`${eixo.cor} text-black border rounded-lg p-4 flex flex-col items-center justify-center space-y-2`}
+          onClick={() => handleEixoSelecionado(eixo.id)}
         >
-          <IconContext.Provider value={{ size: '2em' }}>
-            {React.createElement(eixo.icon)}
-          </IconContext.Provider>
-
           {renderIcon(eixo.icon)}
           <span>{eixo.nome}</span>
         </button>
