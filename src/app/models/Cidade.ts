@@ -21,7 +21,7 @@ export class Cidade extends Localidade {
   capital!: boolean | null;
 
   
-/*
+/*//para fazer o cascade no location?
   @OneToOne(() => Localidade, localidade => localidade.cidade)
   localidade!: Relation<Localidade>;
 */

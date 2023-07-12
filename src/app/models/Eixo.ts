@@ -26,7 +26,7 @@ export class Eixo {
   @Column()
   cor!: string;
 
-  @ManyToMany(() => Indicador, indicador => indicador.eixos)
+  @ManyToMany('Indicador', 'eixos')
   @JoinTable({ name: "indicador_eixo" })
   indicadores!: Indicador[];
   

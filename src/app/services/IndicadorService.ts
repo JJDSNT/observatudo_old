@@ -5,6 +5,7 @@ import { In, Repository } from 'typeorm';
 import { Indicador } from "../models/Indicador";
 import { indicadorRepository } from "../repositories/IndicadorRepository"
 
+//@Service()
 class IndicadorService {
   //private indicadorRepository = getRepository(Indicador);
 
@@ -19,7 +20,7 @@ class IndicadorService {
 
 
   async buscarIndicadoresPorEixo(eixoId: number): Promise<Indicador[]> {
-    return await this.indicadorRepository.createQueryBuilder("indicador")
+    return await indicadorRepository.createQueryBuilder("indicador")
       .leftJoin("indicador.eixos", "eixo")
       .where("eixo.id = :eixoId", { eixoId })
       .getMany();

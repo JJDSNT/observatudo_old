@@ -130,7 +130,7 @@ export class CreateDataController {
         "indicador2",
         "Índice de pobreza",
         "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade.",
-        fonte1,[eixosCriados[2]]
+        fonte1,[eixosCriados[0]]
       );
 
       const indicador3 = new Indicador(

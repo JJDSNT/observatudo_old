@@ -37,7 +37,7 @@ export class Pais extends Localidade {
 
 
 
-  getEstados(): Estados[] {
+  getEstados(): Estado[] {
     return this.Estados;
   }
 
