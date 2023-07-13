@@ -1,5 +1,5 @@
 import { AppDataSource } from '@/app/database/initializer';
-import { Cidade } from '@/app/models/Cidade';
+import { Eixo } from '@/app/models/Eixo';
 
 if (!AppDataSource.isInitialized) {
     try {
@@ -9,4 +9,4 @@ if (!AppDataSource.isInitialized) {
     }
 }
 
-export const CidadeRepository = AppDataSource.manager.getRepository(Cidade);
+export const EixoRepository = AppDataSource.manager.getRepository(Eixo);

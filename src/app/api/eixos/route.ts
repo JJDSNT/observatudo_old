@@ -1,5 +1,42 @@
+/**
+ * @swagger
+ * /api/eixos:
+ *   get:
+ *     summary: Get eixos
+ *     description: Retrieves a list of eixos.
+ *     responses:
+ *       200:
+ *         description: Successful response with the list of eixos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 eixos:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Eixo'
+ *       500:
+ *         description: Error response with a message indicating the error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *     produces:
+ *       - application/json
+ *     tags:
+ *       - Eixos
+ */
+
+
 import { NextResponse } from "next/server";
-import { EstadoService } from "../../services/estadoService";
+import { Container } from 'typedi';
+import { EixoController } from "@/app/controllers/EixoController";
+
+
 /*
 const eixos = [
   { id: 1, nome: 'Saúde', icon: 'FaHeartbeat', cor: 'bg-red-500' },
@@ -14,10 +51,13 @@ const eixos = [
 
   export async function GET() {
     try {
-      //const estadoService = new EstadoService();
-      //const estados = await estadoService.getEstados();
+      const eixoController = Container.get(EixoController);
+      const eixos = await eixoController.getEixos();
       return NextResponse.json({ eixos });
-    } catch (error: any) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return NextResponse.json({ message: error.message }, { status: 500 });
+      }
+      return NextResponse.json({ message: "Unknown error occurred" }, { status: 500 });
     }
   }

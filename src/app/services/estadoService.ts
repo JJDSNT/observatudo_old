@@ -1,4 +1,3 @@
-import DB from "../database/config/ormconfig";
 import { Estado } from '../models/Estado';
 import { EstadoRepository } from '../repositories/EstadoRepository';
 
@@ -15,6 +14,7 @@ export class EstadoService {
 
   public async getEstados(): Promise<Estado|Estado[]|null> {
     //return this.estadoRepository.getEstados();
+    console.log('getestados services');
     let estados = await EstadoRepository.find();
     return estados;
   }

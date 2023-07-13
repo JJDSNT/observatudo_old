@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { EstadoService } from "../../services/estadoService";
+import { Container } from 'typedi';
+import { LocalidadeController } from "@/app/controllers/LocalidadeController";
 
 /**
  * @swagger
@@ -22,14 +23,14 @@ import { EstadoService } from "../../services/estadoService";
  *     produces:
  *       - application/json
  *     tags:
- *       - States
+ *       - Localidade
  */
 export async function GET() {
   try {
-    const estadoService = new EstadoService();
-    const estados = await estadoService.getEstados();
+    const localidadeController = Container.get(LocalidadeController);
+    const estados = await localidadeController.getEstados();
     return NextResponse.json({ estados });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

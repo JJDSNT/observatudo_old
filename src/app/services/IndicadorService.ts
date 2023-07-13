@@ -26,6 +26,18 @@ class IndicadorService {
       .getMany();
   }
 
+  async listarIndicadoresAgrupadosPorEixo() {
+    const indicadores = await indicadorRepository
+      .createQueryBuilder('indicador')
+      .leftJoinAndSelect('indicador.eixo', 'eixo')
+      .select('eixo.nome', 'nomeEixo')
+      .addSelect('COUNT(indicador.id)', 'totalIndicadores')
+      .groupBy('eixo.nome')
+      .getRawMany();
+  
+    return indicadores;
+  }
+
 // IndicadorService
 
 async buscarIndicadoresComValoresPorEixo(localidadeId: number): Promise<any[]> {

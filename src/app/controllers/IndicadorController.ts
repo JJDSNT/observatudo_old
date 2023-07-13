@@ -6,7 +6,7 @@ class IndicadorController {
 
   async buscarTodosIndicadores(req: Request) {
     try {
-      const indicadores = await this.indicadorService.buscarIndicadoresPorEixo(1);
+      const indicadores = await this.indicadorService.buscarTodosIndicadores();
       return indicadores;
     } catch (error) {
       console.error("Erro ao buscar os indicadores:", error);
@@ -14,7 +14,15 @@ class IndicadorController {
     }
   }
 
-
+  async listarIndicadoresAgrupadosPorEixo() {
+    try {
+      const indicadores = await this.indicadorService.listarIndicadoresAgrupadosPorEixo();
+      return indicadores;
+    } catch (error) {
+      console.error("Erro ao buscar os indicadores:", error);
+      return error;
+    }
+  }
 
   async listarIndicadores(request, response) {
     try {

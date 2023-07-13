@@ -69,7 +69,7 @@ const DropdownCombo: React.FC<DropdownComboProps> = ({ onEstadoSelecionado, onCi
         <select
           id="estado"
           name="estado"
-          className="block w-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="block min-w-min p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           value={estadoSelecionado.estado.codigo || ''}
           onChange={handleEstadoChange}
         >
@@ -80,7 +80,7 @@ const DropdownCombo: React.FC<DropdownComboProps> = ({ onEstadoSelecionado, onCi
           ))}
         </select>
       </div>
-
+  
       <div>
         <label htmlFor="cidade" className="block mb-1 text-sm font-medium text-gray-700">
           Cidade
@@ -88,7 +88,7 @@ const DropdownCombo: React.FC<DropdownComboProps> = ({ onEstadoSelecionado, onCi
         <select
           id="cidade"
           name="cidade"
-          className="block w-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="block min-w-min p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           value={cidadeSelecionada?.codigo || ''}
           onChange={handleCidadeChange}
         >
@@ -101,6 +101,7 @@ const DropdownCombo: React.FC<DropdownComboProps> = ({ onEstadoSelecionado, onCi
       </div>
     </div>
   );
+  
 };
 
 export default DropdownCombo;

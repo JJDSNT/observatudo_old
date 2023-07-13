@@ -10,10 +10,10 @@ import { Fonte } from "../../models/Fonte"
 import { Eixo } from "@/app/models/Eixo";
 import { ValorIndicador } from "@/app/models/ValorIndicador";
 
+//import dotenv from "dotenv";
 
 // Using environment variables
-//import dotenv from "dotenv";
-//dotenv.config();
+//console.log(dotenv.config());
 
 //const connectDB =  new DataSource({
 //    type: "postgres",

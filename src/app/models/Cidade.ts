@@ -6,13 +6,12 @@ import { Estado } from "./Estado";
 @Entity()
 export class Cidade extends Localidade {
 
-  constructor(estado: Estado, codigo: number, nome: string) {
+  constructor(codigo: number, nome: string) {
     super(codigo, nome);
-    this.estado = estado;
   }
 
-  @ManyToOne('Estado', 'cidades') //quick fix - https://github.com/typeorm/typeorm/issues/4190
-  estado: Relation<Estado>;
+  @ManyToOne(() => Estado, estado => estado.cidades)
+  estado!: Relation<Estado>;
 
   @PrimaryColumn()
   codigo!: number;

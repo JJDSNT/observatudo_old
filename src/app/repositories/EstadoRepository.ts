@@ -1,5 +1,14 @@
-import DB from "../database/config/ormconfig";
-//consertar para correta inicialização do banco
-import { Estado } from '../models/Estado';
+import { AppDataSource } from '@/app/database/initializer';
+import { Estado } from '@/app/models/Estado';
 
-export const EstadoRepository = DB.getRepository(Estado);
+if (!AppDataSource.isInitialized) {
+    try {
+        await AppDataSource.initialize();
+        console.log('database foi inicializado');
+    } catch (err) {
+        console.error(`Data Source initialization error`, err);
+    }
+}
+
+export const EstadoRepository = AppDataSource.manager.getRepository(Estado);
+

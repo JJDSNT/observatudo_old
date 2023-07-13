@@ -14,8 +14,8 @@ export class Estado extends Localidade {
   @Column()
   sigla!: string;
 
-  @OneToMany('Cidade', 'estado') // quick fix - https://github.com/typeorm/typeorm/issues/4190
-  cidades!: Cidade[];
+  @OneToMany(() => Cidade, cidade => cidade.estado) // quick fix - https://github.com/typeorm/typeorm/issues/4190
+  cidades!: Relation<Cidade[]>;
 
   @OneToOne('Cidade')
   @JoinColumn()
