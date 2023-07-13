@@ -35,6 +35,67 @@ export const getApiDocs = async () => {
               },
             },
           },
+          EstadosResponse: {
+            type: 'object',
+            properties: {
+              estados: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Estado',
+                },
+              },
+            },
+          },
+          Estado: {
+            type: 'object',
+            properties: {
+              estado: {
+                $ref: '#/components/schemas/InfoEstado',
+              },
+              cidades: {
+                type: 'array',
+                items: {
+                  $ref: '#/components/schemas/Cidade',
+                },
+              },
+            },
+          },
+          InfoEstado: {
+            type: 'object',
+            properties: {
+              codigo: {
+                type: 'number',
+              },
+              nome: {
+                type: 'string',
+              },
+              sigla: {
+                type: 'string',
+              },
+            },
+          },
+          Cidade: {
+            type: 'object',
+            properties: {
+              codigo: {
+                type: 'number',
+              },
+              nome: {
+                type: 'string',
+              },
+              capital: {
+                type: 'string|null',
+              },
+            },
+          },
+          ErrorResponse: {
+            type: 'object',
+            properties: {
+              message: {
+                type: 'string',
+              },
+            },
+          },
         },
       },
       security: [],

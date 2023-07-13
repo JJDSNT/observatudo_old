@@ -1,10 +1,13 @@
 import { Service } from 'typedi';
 import { In, Repository } from 'typeorm';
 
-import { Estado } from '../models/Estado';
-import { Cidade } from '../models/Cidade';
-import { EstadoRepository } from '../repositories/EstadoRepository';
-import { CidadeRepository } from '../repositories/CidadeRepository';
+import { Localidade } from '@/app/models/Localidade';
+import { Estado } from '@/app/models/Estado';
+import { Cidade } from '@/app/models/Cidade';
+import { LocalidadeRepository } from '@/app/repositories/LocalidadeRepository';
+import { ValorIndicador } from '@/app/models/ValorIndicador';
+import { EstadoRepository } from '@/app/repositories/EstadoRepository';
+import { CidadeRepository } from '@/app/repositories/CidadeRepository';
 
 
 
@@ -13,6 +16,7 @@ export class LocalidadeService {
 
   private estadoRepository: Repository<Estado> = EstadoRepository;
   private cidadeRepository: Repository<Cidade> = CidadeRepository;
+  private localidadeRepository: Repository<Localidade> = LocalidadeRepository;
 
   constructor() { }
 
@@ -39,21 +43,71 @@ export class LocalidadeService {
     const estados = await this.estadoRepository.find({
       relations: ["cidades"],
     });
-    
+
     //console.log(estados);
 
     return estados.map(estado => ({
       estado,
       cidades: estado.cidades
     }));
-      
+
   }
 
 
 
+  public async getIndicadoresPorLocalidade() : Promise<Localidade[] | null> {
+    const localidades = await this.localidadeRepository.find({
+      relations: ["valoresIndicador.indicador","valoresIndicador"]
+    });
+
+    return localidades;
+  }
+
+  public async getIndicadoresPorLocalidade2(): Promise<any[]> {
+    const localidades = await this.localidadeRepository.find({
+      relations: ["valoresIndicador.indicador", "valoresIndicador"]
+    });
   
+    const result: any[] = [];
+  
+    for (const localidade of localidades) {
+      const indicadoresMap = new Map<string, any>(); // Mapa para agrupar valores de indicador por código do indicador
+  
+      for (const valorIndicador of localidade.valoresIndicador) {
+        const codigoIndicador = valorIndicador.indicador.codigo_indicador;
+  
+        if (indicadoresMap.has(codigoIndicador)) {
+          indicadoresMap.get(codigoIndicador)!.dados.push({
+            ano: valorIndicador.data, // Utilizar diretamente a propriedade getFullYear() do objeto Date
+            valor: valorIndicador.valor
+          });
+        } else {
+          const indicador = valorIndicador.indicador;
+  
+          indicadoresMap.set(codigoIndicador, {
+            codigo_ibge: localidade.codigo_ibge,
+            cidade: localidade.nome,
+            estado: localidade.estado,
+            eixo: indicador.eixo,
+            indicador: indicador.nome,
+            descricao_indicador: indicador.descricao,
+            dados: [
+              {
+                ano: valorIndicador.data, // Utilizar diretamente a propriedade getFullYear() do objeto Date
+                valor: valorIndicador.valor
+              }
+            ]
+          });
+        }
+      }
+  
+      result.push(...indicadoresMap.values());
+    }
+  
+    return result;
+  }
 
-
+  
   public async getCidadesByEstado(estadoId: number | undefined): Promise<Cidade[] | null> {
     const estado = await this.getEstadoById(estadoId);
     if (estado) {
@@ -71,48 +125,6 @@ export class LocalidadeService {
     return cidades!.cidades;
   }
 
-
-  /*
-  
-    public async function getCidadesByEstado({ estadoId }: { estadoId: number; }): Promise<Cidade[] | null> {
-      //const estadoRepository = new EstadoRepository(); // Instancie o repositório adequado
-  //    const connection = await getConnection(); // Obtenha a conexão do TypeORM
-  //  const estadoRepository = connection.getRepository(Estado); // Obtenha o repositório do Estado
-  
-      // Verifique se o estado existe
-      const estado: Estado | null = await this.estadoRepository.find(estadoId);
-      if (!estado) {
-        return null; // Retorna nulo se o estado não for encontrado
-      }
-    
-      // Retorna as cidades do estado
-      return estado.cidades;
-    }
-  
-  */
-
-
-/*
-    async getEstadosECidades(): Promise<{ estado: Estado, cidades: Cidade[] }[]> {
-      try {
-        const estados: Estado[] = await this.getEstados();
-    
-        const estadosECidades: { estado: Estado, cidades: Cidade[] }[] = [];
-    
-        for (const estado of estados) {
-          const cidades: Cidade[] = await this.getCidadesPorEstado(estado.id);
-          estadosECidades.push({ estado, cidades });
-        }
-    
-        return estadosECidades;
-      } catch (error) {
-        // Trate os erros de forma apropriada de acordo com a lógica do seu aplicativo
-        console.error("Erro ao obter os estados e cidades:", error);
-        return [];
-      }
-    }
-  
-*/
 
   public async adicionarEstado(estado: Estado): Promise<void> {
     await this.estadoRepository.create(estado);

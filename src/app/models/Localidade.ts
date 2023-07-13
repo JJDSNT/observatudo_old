@@ -1,9 +1,9 @@
 import "reflect-metadata"
-import { Entity, Column, ManyToMany, JoinColumn, PrimaryColumn, OneToOne } from "typeorm";
+import { Entity, Column, ManyToMany, JoinColumn, PrimaryColumn, OneToOne, OneToMany } from "typeorm";
 import type { Relation } from "typeorm";
-import { Indicador } from "./Indicador";
-import { Cidade } from "./Cidade";
-import { Estado } from "./Estado";
+import { Indicador } from "@/app/models/Indicador"
+import { ValorIndicador } from "@/app/models/ValorIndicador";
+
 
 @Entity()
 export class Localidade {
@@ -13,17 +13,22 @@ export class Localidade {
   @Column()
   nome!: string;
 
-  @ManyToMany("Indicador", "indicadores_localidades")
-  indicadores!: Relation<Indicador>;
-/*
-  @OneToOne('Estado', { cascade: true })
-  @JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
-  estado?: Relation<Estado>;
+  //@ManyToMany(() => Indicador, indicador => indicador.localidades)
+  //indicadores!: Indicador[];
+  
+  
+  @OneToMany(() => ValorIndicador, valorIndicador => valorIndicador.localidade)
+  valoresIndicador!: ValorIndicador[];
 
-  @OneToOne('Cidade', { cascade: true })
-  @JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
-  cidade?: Relation<Cidade>;
-*/
+  /*
+    @OneToOne('Estado', { cascade: true })
+    @JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
+    estado?: Relation<Estado>;
+  
+    @OneToOne('Cidade', { cascade: true })
+    @JoinColumn({ name: "codigo", referencedColumnName: "codigo" })
+    cidade?: Relation<Cidade>;
+  */
   constructor(codigo: number, nome: string) {
     this.codigo = codigo;
     this.nome = nome;

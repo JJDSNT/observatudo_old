@@ -3,16 +3,21 @@ import { In, Repository } from 'typeorm';
 
 
 import { Indicador } from "../models/Indicador";
-import { indicadorRepository } from "../repositories/IndicadorRepository"
+import { IndicadorRepository } from "../repositories/IndicadorRepository"
 
-//@Service()
-class IndicadorService {
-  //private indicadorRepository = getRepository(Indicador);
+@Service()
+export class IndicadorService {
+
+  private indicadorRepository: Repository<Indicador> = IndicadorRepository;
+
+  constructor() { }
+
+  
 
   async buscarTodosIndicadores(): Promise<Indicador[]> {
-    return await indicadorRepository.find(
+    return await this.indicadorRepository.find(
       {
-        //relations: ['Eixo'],
+        relations: ['eixos'],
         //loadRelationIds: true,
       }
     );
@@ -96,4 +101,3 @@ async buscarIndicadoresComValoresPorEixo(localidadeId: number): Promise<any[]> {
   }
 }
 
-export default IndicadorService;

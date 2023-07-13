@@ -30,7 +30,10 @@ export async function GET() {
     const localidadeController = Container.get(LocalidadeController);
     const estados = await localidadeController.getEstados();
     return NextResponse.json({ estados });
-  } catch (error: any) {
-    return NextResponse.json({ message: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ message: "Unknown error occurred" }, { status: 500 });
   }
 }

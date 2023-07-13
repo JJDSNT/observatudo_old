@@ -36,17 +36,17 @@ export class CreateDataController {
       // Criar cidades
 
       const localidade4 = new Localidade(1010, "Campos do Jordão");
-      const cidade1 = new Cidade(estado1, 1010, "Campos do Jordão");
+      const cidade1 = new Cidade(1010, "Campos do Jordão");
       const localidade5 = new Localidade(1011, "Campinas");
-      const cidade2 = new Cidade(estado1, 1011, "Campinas");
+      const cidade2 = new Cidade(1011, "Campinas");
       const localidade6 = new Localidade(2020, "Rio de Janeiro");
-      const cidade3 = new Cidade(estado2, 2020, "Rio de Janeiro");
+      const cidade3 = new Cidade(2020, "Rio de Janeiro");
       const localidade7 = new Localidade(2021, "Niterói");
-      const cidade4 = new Cidade(estado2, 2021, "Niterói");
+      const cidade4 = new Cidade(2021, "Niterói");
       const localidade8 = new Localidade(3030, "Belo Horizonte");
-      const cidade5 = new Cidade(estado3, 3030, "Belo Horizonte");
+      const cidade5 = new Cidade(3030, "Belo Horizonte");
       const localidade9 = new Localidade(3031, "Uberlândia");
-      const cidade6 = new Cidade(estado3, 3031, "Uberlândia");
+      const cidade6 = new Cidade(3031, "Uberlândia");
 
       await DB.manager.save(localidade4);
       await DB.manager.save(localidade5);
@@ -122,7 +122,7 @@ export class CreateDataController {
         "indicador1",
         "Cobertura vacinal",
         "Esse indicador avalia a proporção de crianças e adultos que receberam as vacinas recomendadas pelas autoridades de saúde.",
-        fonte1,[eixosCriados[0]]
+        fonte1, [eixosCriados[0]]
       );
 
 
@@ -130,21 +130,21 @@ export class CreateDataController {
         "indicador2",
         "Índice de pobreza",
         "Esse indicador mede a proporção de pessoas que vivem abaixo da linha de pobreza em uma cidade.",
-        fonte1,[eixosCriados[0]]
+        fonte1, [eixosCriados[0]]
       );
 
       const indicador3 = new Indicador(
         "indicador3",
         "Taxa de conclusão do ensino médio",
         "Esse indicador mede a proporção de jovens que concluem o ensino médio em relação à população em idade escolar adequada para esse nível de ensino",
-        fonte2,[eixosCriados[1]]
+        fonte2, [eixosCriados[1]]
       );
 
       const indicador4 = new Indicador(
         "indicador4",
         "Capacidade de pagamento",
         "Esse indicador mede a capacidade de pagamento",
-        fonte1,[eixosCriados[5]]
+        fonte1, [eixosCriados[5]]
       );
 
 
@@ -160,13 +160,16 @@ export class CreateDataController {
 
       for (const localidade of localidades) {
         for (let i = 1; i <= 4; i++) {
-          const valor = new ValorIndicador();
-          valor.indicador = i === 1 ? indicador1 : i === 2 ? indicador2 : i === 3 ? indicador3 : indicador4;
-          valor.localidade = localidade;
-          valor.valor = +(Math.random() * 100).toFixed(2); // Valor aleatório entre 0 e 100
-          valor.data = new Date(currentDate); // Assign a new instance of Date
-          currentDate.setMonth(currentDate.getMonth() + i); // Increment the month by 1
-          valoresIndicador.push(valor);
+          const indicador = i === 1 ? indicador1 : i === 2 ? indicador2 : i === 3 ? indicador3 : indicador4;
+          for (let j = 0; j < 2; j++) {
+            const valor = new ValorIndicador();
+            valor.indicador = indicador;
+            valor.localidade = localidade;
+            valor.valor = +(Math.random() * 100).toFixed(2); // Valor aleatório entre 0 e 100
+            valor.data = new Date(currentDate); // Assign a new instance of Date
+            currentDate.setMonth(currentDate.getMonth() + i+j); // Increment the month by 1
+            valoresIndicador.push(valor);
+          }
         }
       }
 

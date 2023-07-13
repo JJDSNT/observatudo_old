@@ -1,5 +1,5 @@
 import { AppDataSource } from '@/app/database/initializer';
-import { Indicador } from '@/app/models/Indicador';
+import { Localidade } from '@/app/models/Localidade';
 
 if (!AppDataSource.isInitialized) {
     try {
@@ -9,4 +9,4 @@ if (!AppDataSource.isInitialized) {
     }
 }
 
-export const IndicadorRepository = AppDataSource.manager.getRepository(Indicador);
+export const LocalidadeRepository = AppDataSource.manager.getRepository(Localidade);

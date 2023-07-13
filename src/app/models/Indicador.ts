@@ -12,8 +12,8 @@ export class Indicador {
   @PrimaryColumn()
   codigo_indicador!: string;
 
-  
-  @ManyToOne('Fonte','indicadores')
+
+  @ManyToOne('Fonte', 'indicadores')
   fonte!: Relation<Fonte>;
 
   @Column()
@@ -30,13 +30,13 @@ export class Indicador {
 
   @ManyToMany(() => Eixo, eixo => eixo.indicadores)
   @JoinTable({ name: "indicador_eixo" })
-  eixos!: Eixo[];
+  eixos!: Relation<Eixo[]>;
 
-  @ManyToMany("Localidade", "indicadores")
-  localidades!: Relation<Localidade>;
+  //@ManyToMany(() => Localidade, localidade => localidade.indicadores)
+  //localidades!: Relation<Localidade[]>;
 
-  @OneToMany("ValorIndicador", "indicador")
-  valoresIndicador!: ValorIndicador[];
+  @OneToMany(() => ValorIndicador, valorIndicador => valorIndicador.indicador)
+  valoresIndicador!: Relation<ValorIndicador[]>;
 
   constructor(
     codigo_indicador: string,
@@ -46,7 +46,7 @@ export class Indicador {
     eixos: Eixo[],
     dono?: string,
     email?: string,
-) {
+  ) {
     this.codigo_indicador = codigo_indicador;
     this.nome = nome;
     this.descricao = descricao;
@@ -54,47 +54,47 @@ export class Indicador {
     this.eixos = eixos;
     this.dono = dono ?? null;
     this.email = email ?? null;
-}
+  }
 
-getCodigoIndicador(): string {
+  getCodigoIndicador(): string {
     return this.codigo_indicador;
-}
+  }
 
-setCodigoIndicador(codigo_indicador: string): void {
+  setCodigoIndicador(codigo_indicador: string): void {
     this.codigo_indicador = codigo_indicador;
-}
+  }
 
-getFonte(): Fonte {
+  getFonte(): Fonte {
     return this.fonte;
-}
+  }
 
-setFonte(fonte: Fonte): void {
+  setFonte(fonte: Fonte): void {
     this.fonte = fonte;
-}
+  }
 
-getNome(): string {
+  getNome(): string {
     return this.nome;
-}
+  }
 
-getDescricao(): string {
+  getDescricao(): string {
     return this.descricao;
-}
+  }
 
-getDono(): string | null {
+  getDono(): string | null {
     return this.dono;
-}
+  }
 
-setDono(dono: string): void {
+  setDono(dono: string): void {
     this.dono = dono;
-}
+  }
 
-getEmail(): string | null {
+  getEmail(): string | null {
     return this.email;
-}
+  }
 
-setEmail(email: string): void {
+  setEmail(email: string): void {
     this.email = email;
-}
+  }
 
 
   getValores(): ValorIndicador[] {
@@ -110,15 +110,15 @@ setEmail(email: string): void {
 
 
 
-  /*
-    @Column("jsonb")
-    valores!: Map<Date, number>;
-  
-    getValores2(): Map<Date, number> {
-      return this.valores;
-    }
-  
-    getValor2(date: Date): number | undefined {
-      return this.valores.get(date);
-    }
-  */
+/*
+  @Column("jsonb")
+  valores!: Map<Date, number>;
+ 
+  getValores2(): Map<Date, number> {
+    return this.valores;
+  }
+ 
+  getValor2(date: Date): number | undefined {
+    return this.valores.get(date);
+  }
+*/

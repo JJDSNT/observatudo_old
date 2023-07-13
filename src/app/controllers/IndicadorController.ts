@@ -1,10 +1,18 @@
-import { Indicador } from "../models/Indicador";
-import IndicadorService from "../services/IndicadorService";
+import { Service } from 'typedi';
+import { Indicador } from '../models/Indicador';
+import { IndicadorService } from "../services/IndicadorService";
 
-class IndicadorController {
-  private indicadorService = new IndicadorService();
 
-  async buscarTodosIndicadores(req: Request) {
+@Service()
+export class IndicadorController {
+  private indicadorService: IndicadorService;
+
+  constructor() {
+    this.indicadorService = new IndicadorService();
+  }
+
+
+  async buscarTodosIndicadores(_req: Request) {
     try {
       const indicadores = await this.indicadorService.buscarTodosIndicadores();
       return indicadores;
@@ -38,13 +46,13 @@ class IndicadorController {
   async listarIndicadoresPorEixo(req: Request, res: Response) {
     try {
       const { eixoId } = req.params;
-  
+
       const indicadores = await this.indicadorService.buscarIndicadoresPorEixo(Number(eixoId));
-  
+
       if (indicadores.length === 0) {
         return res.status(404).json({ message: "Nenhum indicador encontrado para o eixo fornecido" });
       }
-  
+
       return res.json(indicadores);
     } catch (error) {
       console.error("Erro ao buscar os indicadores por eixo:", error);
@@ -56,13 +64,13 @@ class IndicadorController {
   async buscarIndicadoresComValoresPorEixo(req: Request, res: Response) {
     try {
       const { localidadeId } = req.params;
-  
+
       const indicadores = await this.indicadorService.buscarIndicadoresComValoresPorEixo(Number(localidadeId));
-  
+
       if (indicadores.length === 0) {
         return res.status(404).json({ message: "Nenhum indicador encontrado para a localidade fornecida" });
       }
-  
+
       return res.json(indicadores);
     } catch (error) {
       console.error("Erro ao buscar os indicadores com valores por eixo:", error);

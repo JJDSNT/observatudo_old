@@ -15,6 +15,14 @@ export class EixoService {
     return this.eixoRepository.find();
   }
 
+  async getEixosComIndicadores(): Promise<Eixo[]> {
+    return await this.eixoRepository.find(
+      {
+        relations: ['indicadores'],
+      }
+    );
+  }
+
   public async getEixoById(eixoId: number): Promise<Eixo | null> {
     const eixo = await this.eixoRepository.findOneBy({ id: In([eixoId]) });
     return eixo;

@@ -10,14 +10,14 @@ export class ValorIndicador {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne('Indicador', 'valoresIndicador')
+  @ManyToOne(() => Indicador, indicador => indicador.valoresIndicador)
   @JoinColumn({ name: 'indicadorId' })
   indicador!: Relation<Indicador>;
-
-  @ManyToOne('Localidade', 'valoresIndicador')
+  
+  @ManyToOne(() => Localidade, localidade => localidade.valoresIndicador)
   @JoinColumn({ name: 'codigo' })
   localidade!: Relation<Localidade>;
-
+  
   @Column({ type: "date" })
   data!: Date;
 
