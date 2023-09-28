@@ -29,13 +29,7 @@ import { ValorIndicador } from "@/app/models/ValorIndicador";
 //})
 
 // const DB = new DataSource({
-//     type: "sqlite",
-//     database: "testtypeorm.sqlite",
-//     synchronize: true,
-//     logging: true,
-//     entities: [Localidade, Estado, Cidade, Indicador, ValorIndicador,Eixo],
-//     migrations: [],
-//     subscribers: [],
+
 
 //     //    entities: ["./src/Entities/**/*.ts"],
 // })
