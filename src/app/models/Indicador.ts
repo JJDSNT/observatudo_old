@@ -22,10 +22,10 @@ export class Indicador {
   @Column()
   descricao: string;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column({ nullable: true, type: 'varchar' })
   dono: string | null;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column({ nullable: true, type: 'varchar' })
   email: string | null;
 
   @ManyToMany(() => Eixo, eixo => eixo.indicadores)

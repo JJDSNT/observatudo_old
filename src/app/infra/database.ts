@@ -40,7 +40,7 @@ options = {
     database: process.env.TYPEORM_DATABASE,
     connectString: process.env.TYPEORM_CONNECTSTRING,
     logging: false,
-    synchronize: true,
+    synchronize: false,
     entities: [Cidade, Eixo, Estado, Fonte, Indicador, Localidade, Pais, ValorIndicador],
 }
 

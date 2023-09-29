@@ -16,7 +16,7 @@ export class Cidade extends Localidade {
   @PrimaryColumn()
   codigo!: number;
 
-  @Column({ nullable: true, type: 'boolean'})
+  @Column({ nullable: true, type: 'number'})
   capital!: boolean | null;
 
   

@@ -17,7 +17,7 @@ export class Eixo {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'enum', enum: Eixos })
+  @Column({ type: 'varchar', enum: Eixos })
   nome!: Eixos;
 
   @Column()

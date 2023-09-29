@@ -1,4 +1,4 @@
-import { AppDataSource } from '@/app/database/initializer';
+import { AppDataSource } from '@/app/infra/database';
 import { Indicador } from '@/app/models/Indicador';
 
 if (!AppDataSource.isInitialized) {

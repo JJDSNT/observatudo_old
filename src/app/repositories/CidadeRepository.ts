@@ -1,4 +1,4 @@
-import { AppDataSource } from '@/app/database/initializer';
+import { AppDataSource } from '@/app/infra/database';
 import { Cidade } from '@/app/models/Cidade';
 
 if (!AppDataSource.isInitialized) {
