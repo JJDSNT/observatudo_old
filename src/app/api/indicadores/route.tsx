@@ -7,7 +7,10 @@ export async function GET(req: NextRequest) {
         const indicadorController = new IndicadorController();
         const indicadores = await indicadorController.buscarTodosIndicadores(req);
         return NextResponse.json({ indicadores });
-    } catch (error) {
-        return NextResponse.json({ message: error.message }, { status: 500 });
-    }
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+          return NextResponse.json({ message: error.message }, { status: 500 });
+        }
+        return NextResponse.json({ message: "Unknown error occurred" }, { status: 500 });
+      }
 }
